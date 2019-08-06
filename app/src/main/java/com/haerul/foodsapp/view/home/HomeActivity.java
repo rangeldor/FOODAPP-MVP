@@ -1,12 +1,17 @@
 package com.haerul.foodsapp.view.home;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.util.Pair;
+import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -67,10 +72,19 @@ public class HomeActivity extends AppCompatActivity implements HomeView {
         headerAdapter.notifyDataSetChanged();
 
         headerAdapter.setOnItemClickListener((view, position) -> {
+            ImageView imageView = view.findViewById ( R.id.mealThumb );
             TextView mealName = view.findViewById ( R.id.mealName );
             Intent intent = new Intent(getApplicationContext (), DetailActivity.class);
             intent.putExtra(EXTRA_DETAIL, mealName.getText ().toString ());
-            startActivity(intent);
+
+            Pair<View, String> pair = Pair.create ( (View) imageView, ViewCompat.getTransitionName ( imageView ) );
+            ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation ( HomeActivity.this, pair );
+
+            if ( Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN ) {
+                startActivity ( intent , optionsCompat.toBundle ( ) );
+            } else {
+                startActivity ( intent );
+            }
         });
     }
 

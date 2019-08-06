@@ -1,10 +1,14 @@
 package com.haerul.foodsapp.view.category;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.util.Pair;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -24,6 +28,7 @@ import com.haerul.foodsapp.view.detail.DetailActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
+import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -95,10 +100,20 @@ public class CategoryFragment extends Fragment implements CategoryView {
         adapter.notifyDataSetChanged ( );
 
         adapter.setOnItemClickListener ( (view , position) -> {
+            ImageView imageView = view.findViewById ( R.id.mealThumb );
             TextView mealName = view.findViewById ( R.id.mealName );
             Intent intent = new Intent(getActivity (), DetailActivity.class);
             intent.putExtra(EXTRA_DETAIL, mealName.getText ().toString ());
-            startActivity(intent);
+
+            Pair<View, String> pair = Pair.create ( (View) imageView, ViewCompat.getTransitionName(imageView) );
+            ActivityOptionsCompat optionsCompat = ActivityOptionsCompat.makeSceneTransitionAnimation ( Objects.requireNonNull ( getActivity ( ) ) , pair );
+
+            if ( Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN ) {
+                startActivity ( intent , optionsCompat.toBundle ( ) );
+            } else {
+                startActivity ( intent );
+            }
+
         } );
     }
 

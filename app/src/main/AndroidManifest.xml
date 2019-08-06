@@ -4,7 +4,9 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <!-- Adicionar android:largeHeap="true" para poder passar as viewpager com velocidade e renderizar as imagens sem dar erro -->
     <application
+        android:largeHeap="true"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"

@@ -18,8 +18,8 @@
             android:layout_height="match_parent">
             <ImageView
                 android:id="@+id/mealThumb"
-                android:transitionName="img"
                 android:src="@drawable/sample_image_meal"
+                android:transitionName="img"
                 android:layout_width="match_parent"
                 android:scaleType="centerCrop"
                 android:layout_height="match_parent" />

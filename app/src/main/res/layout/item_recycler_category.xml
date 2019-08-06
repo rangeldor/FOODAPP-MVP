@@ -16,6 +16,7 @@
         android:layout_height="wrap_content">
         <ImageView
             android:id="@+id/categoryThumb"
+            android:transitionName="img"
             android:scaleType="centerInside"
             android:padding="5dp"
             android:src="@drawable/sample_image_category"
